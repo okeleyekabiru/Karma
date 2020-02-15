@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,37 +18,43 @@ namespace ShopyLibrary.Interface
         }
         public IEnumerable<Product> GetProductsByName(string product)
         {
-            throw new NotImplementedException();
+            return _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName) || r.ProductName == product)
+                .OrderBy(r => r.ProductName);
         }
 
-        public IEnumerable<Product> GetProductsByCatergory(string CategoryEnum)
+        public IEnumerable<Product> GetProductsByCatergory(int CategoryEnum)
         {
-            throw new NotImplementedException();
+            return _db.Products.Where(r => r.Category == CategoryEnum).OrderBy(r => r.ProductName);
         }
 
         public Product GetProduct(int id)
         {
-            throw new NotImplementedException();
+            return _db.Products.Find(id);
         }
 
         public Product DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            _db.Products.Remove(product);
+            return product;
         }
 
         public Product UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            _db.Products.Attach(product);
+            _db.Entry(product).State = EntityState.Modified;
+            return product;
         }
 
         public IEnumerable<Product> GetAllProducts()
         {
-            throw new NotImplementedException();
+            return _db.Products.OrderBy(r => r.ProductName).ToList();
         }
 
-        public bool SaveChanges()
+        public bool Commit()
         {
-            throw new NotImplementedException();
+            return _db.SaveChanges() > 0;
         }
+
+       
     }
 }

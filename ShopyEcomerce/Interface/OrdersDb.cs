@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ShopyEcomerce.ef;
-using Order = ShopyLibrary.Ef.Order;
+
 
 namespace ShopyLibrary.Interface
 {
@@ -18,27 +19,38 @@ namespace ShopyLibrary.Interface
         }
         public Order AddOrder(Order order)
         {
-            throw new NotImplementedException();
+            _db.Orders.Add(order);
+            return order;
         }
 
         public Order GetOrder(int id)
         {
-            throw new NotImplementedException();
+           return  _db.Orders.Find(id);
+          
         }
 
         public IEnumerable<Order> GetAllOrder(string userId)
         {
-            throw new NotImplementedException();
+            return  _db.Orders.Where(r => r.User_Id == userId).ToList();
+
         }
 
-        public Order cancelOrder(bool cancelConfirmation, int id)
+        public void cancelOrder( IEnumerable<Order> order)
         {
-            throw new NotImplementedException();
+            _db.Orders.RemoveRange(order);
+
         }
 
         public Order UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            _db.Orders.Attach(order);
+            _db.Entry(order).State = EntityState.Modified;
+            return order;
+        }
+
+        public bool Commit()
+        {
+           return _db.SaveChanges() > 0;
         }
     }
 }

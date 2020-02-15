@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ShopyLibrary.Ef;
+using ShopyEcomerce.ef;
 
 namespace ShopyLibrary.Interface
 {
@@ -12,8 +12,8 @@ namespace ShopyLibrary.Interface
       Order AddOrder(Order order);
       Order GetOrder(int id);
       IEnumerable<Order> GetAllOrder(string userId);
-      Order cancelOrder(bool cancelConfirmation, int id);
+      void cancelOrder(IEnumerable<Order> order);
       Order UpdateOrder(Order order);
-
-  }
+      bool Commit();
+    }
 }
