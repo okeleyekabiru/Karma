@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using ShopyLibrary.ef;
+using ShopyEcomerce.ef;
 using ShopyLibrary.Interface;
+
 
 namespace Shopy.App_Start
 {
@@ -16,7 +17,7 @@ namespace Shopy.App_Start
         {
             var build = new ContainerBuilder();
             build.RegisterControllers(typeof(MvcApplication).Assembly);
-            build.RegisterType<EcommerceDB>().InstancePerRequest();
+            build.RegisterType<EcommerceDb>().InstancePerRequest();
             build.RegisterType<Productsdb>().As<IProducts>().InstancePerRequest();
             build.RegisterType<CartsDb>().As<ICarts>().InstancePerRequest();
             build.RegisterType<OrdersDb>().As<IOrders>().InstancePerRequest();

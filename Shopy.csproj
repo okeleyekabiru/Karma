@@ -287,9 +287,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ShopyLibrary\ShopyLibrary.csproj">
-      <Project>{4b63ed33-7ac7-4f3b-ac89-2deabcd3e33e}</Project>
-      <Name>ShopyLibrary</Name>
+    <ProjectReference Include="ShopyEcomerce\ShopyEcomerce.csproj">
+      <Project>{21A6EC0C-1358-4C57-AA6C-4B6DFBA2D70C}</Project>
+      <Name>ShopyEcomerce</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
