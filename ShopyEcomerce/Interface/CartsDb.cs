@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using ShopyEcomerce.ef;
 
 namespace ShopyLibrary.Interface
 {
- public   class CartsDb:ICarts
+    public class CartsDb : ICarts
     {
         private readonly EcommerceDb _db;
 
@@ -18,6 +19,7 @@ namespace ShopyLibrary.Interface
         {
             _db = db;
         }
+
         public Cart AddCart(Cart cart)
         {
             Cart cart1 = _db.Carts.Add(cart);
@@ -26,7 +28,7 @@ namespace ShopyLibrary.Interface
 
         public IEnumerable<Cart> GetAllCarts()
         {
-            return _db.Carts.OrderBy(cart =>cart.ProductName).ToList();
+            return _db.Carts.OrderBy(cart => cart.ProductName).ToList();
         }
 
         public Cart GetCart(int id)
@@ -48,7 +50,30 @@ namespace ShopyLibrary.Interface
 
         public bool Commit()
         {
-          return  _db.SaveChanges() > 0;
+            return _db.SaveChanges() > 0;
+        }
+
+        public void DeleteMutiple(string productname, string Userid)
+
+        {
+            var model = from cart in _db.Carts
+                where (cart.User_Id.Equals(Userid) && cart.ProductName.Equals(productname))
+                select cart;
+            _db.Carts.RemoveRange(model);
+
+            
+
+        }
+
+        public IEnumerable<Cart> ShowMultipleCarts(string productname, string Userid)
+        {
+            var model = from cart in _db.Carts
+                where (cart.User_Id.Equals(Userid) && cart.ProductName.Equals(productname))
+                select cart;
+            return model;
         }
     }
+
+
+
 }

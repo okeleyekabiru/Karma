@@ -27,8 +27,9 @@ namespace Shopy.Controllers
         public ActionResult Index()
         {
             var model = (User)Session["Id"];
-           var m =  _db.GetAllOrder(model.Id);
-            return View(m);
+         
+       var view= BusinessLogic.LoadOrdersAndCarts(_db.GetAllOrder(model.Id));
+            return View(view);
         }
         [Authorize]
         // GET: Orders/Details/5

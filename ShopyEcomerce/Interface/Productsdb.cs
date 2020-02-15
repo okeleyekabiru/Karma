@@ -18,7 +18,7 @@ namespace ShopyLibrary.Interface
         }
         public IEnumerable<Product> GetProductsByName(string product)
         {
-            return _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName) || r.ProductName == product)
+            return _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName) || r.ProductName.StartsWith(product))
                 .OrderBy(r => r.ProductName);
         }
 
