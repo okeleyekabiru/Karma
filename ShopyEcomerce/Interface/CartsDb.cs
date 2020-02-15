@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,28 +20,35 @@ namespace ShopyLibrary.Interface
         }
         public Cart AddCart(Cart cart)
         {
-            _db.Carts.Add(cart);
+            Cart cart1 = _db.Carts.Add(cart);
             return cart;
         }
 
         public IEnumerable<Cart> GetAllCarts()
         {
-            throw new NotImplementedException();
+            return _db.Carts.OrderBy(cart =>cart.ProductName).ToList();
         }
 
         public Cart GetCart(int id)
         {
-            throw new NotImplementedException();
+            return _db.Carts.Find(id);
         }
 
-        public Cart Delete(Cart cart)
+        public void Delete(Cart cart)
         {
-            throw new NotImplementedException();
+            _db.Carts.Remove(cart);
         }
 
         public Cart Update(Cart cart)
         {
-            throw new NotImplementedException();
+            _db.Carts.Attach(cart);
+            _db.Entry(cart).State = EntityState.Modified;
+            return cart;
+        }
+
+        public bool Commit()
+        {
+          return  _db.SaveChanges() > 0;
         }
     }
 }

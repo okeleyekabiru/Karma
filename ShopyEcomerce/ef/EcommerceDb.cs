@@ -7,8 +7,9 @@ namespace ShopyEcomerce.ef
 
     public partial class EcommerceDb : DbContext
     {
+   
         public EcommerceDb()
-            : base("name=EcommerceDb")
+            : base(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=GoodLifeEcommerce;Integrated Security=True")
         {
         }
 

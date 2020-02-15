@@ -14,8 +14,9 @@ namespace ShopyLibrary.Interface
       Cart AddCart(Cart cart);
       IEnumerable<Cart> GetAllCarts();
       Cart GetCart( int id);
-      Cart Delete(Cart cart);
+      void Delete(Cart cart);
       Cart Update(Cart cart);
-      
+      bool Commit();
+
   }
 }
