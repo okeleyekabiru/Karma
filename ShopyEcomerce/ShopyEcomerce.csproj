@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic.cs" />
     <Compile Include="ef\Cart.cs" />
     <Compile Include="ef\EcommerceDb.cs" />
     <Compile Include="ef\Order.cs" />

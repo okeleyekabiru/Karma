@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Shopy.Models;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
 using ShopyLibrary.Interface;
 
@@ -104,11 +105,12 @@ namespace Shopy.Controllers
 
             var model = (User)Session["Id"];
             var order = _db.GetAllOrder(model.Id);
+           var  orders = BusinessLogic.LoadOrdersAndCarts(order);
             if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View(orders);
         }
         [Authorize]
         // POST: Orders/Delete/5
@@ -119,6 +121,7 @@ namespace Shopy.Controllers
            
                 var model = (User)Session["Id"];
                 var order = _db.GetAllOrder(model.Id);
+                BusinessLogic.LoadOrdersAndCarts(order);
                 _db.cancelOrder(order);
                 _db.Commit();
                 return RedirectToAction("Index");
