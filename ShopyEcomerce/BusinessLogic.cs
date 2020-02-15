@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ShopyEcomerce.ef;
 using ShopyLibrary.Model;
+using System.Drawing;
+using System.IO;
+using System.Net.Mime;
 
 namespace ShopyEcomerce
 {
@@ -61,9 +64,27 @@ namespace ShopyEcomerce
             return Temp.Values.ToList();
 
 
+        }
+
+
+       
+        public static byte[] GetImageFromByteArray(byte[] byteArray)
+
+        {
+            Stream stream = new MemoryStream(byteArray);
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+
+
+
 
         }
 
 
-    }
 }
+  
+   }
+

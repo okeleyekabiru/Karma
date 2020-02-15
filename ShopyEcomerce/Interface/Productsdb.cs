@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
 
 namespace ShopyLibrary.Interface
@@ -24,7 +25,7 @@ namespace ShopyLibrary.Interface
 
         public IEnumerable<Product> GetProductsByCatergory(int CategoryEnum)
         {
-            return _db.Products.Where(r => r.Category == CategoryEnum).OrderBy(r => r.ProductName);
+            return _db.Products.Where(r => (int)(r.Category) == CategoryEnum).OrderBy(r => r.ProductName);
         }
 
         public Product GetProduct(int id)
@@ -47,7 +48,19 @@ namespace ShopyLibrary.Interface
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return _db.Products.OrderBy(r => r.ProductName).ToList();
+           
+           var content =  _db.Products.OrderBy(r => r.ProductName).ToList();
+           foreach (var VARIABLE in content)
+           {
+               VARIABLE.Photos = BusinessLogic.GetImageFromByteArray(VARIABLE.Photos);
+           }
+
+           return content;
+        }
+
+        public void AddProduct(Product product)
+        {
+            _db.Products.Add(product);
         }
 
         public bool Commit()

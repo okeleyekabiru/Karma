@@ -16,6 +16,7 @@ namespace ShopyLibrary.Interface
       Product DeleteProduct(Product product);
       Product UpdateProduct(Product product);
       IEnumerable<Product> GetAllProducts();
+      void AddProduct(Product product);
       bool Commit();
     }
 }

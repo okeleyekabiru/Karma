@@ -18,6 +18,6 @@ namespace ShopyLibrary.Ef
 
         public decimal Price { get; set; }
 
-        public byte[] Photos { get; set; }
+        public string Photos { get; set; }
     }
 }
