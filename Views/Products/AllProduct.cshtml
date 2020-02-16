@@ -4,6 +4,15 @@
 @{
     ViewBag.Title = "AllProduct";
 
+    var option = new List<SelectListItem>
+    {
+        new SelectListItem {Text = "Mobile", Value = "0"},
+        new SelectListItem {Text = "Tablet", Value = "1"},
+        new SelectListItem {Text = "Laptop", Value = "2"},
+        new SelectListItem {Text = "Headset", Value = "3"},
+        new SelectListItem {Text = "Appliances", Value = "4"},
+    };
+
 }
 
 <h2>AllProduct</h2>
@@ -11,7 +20,14 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+
+@using (Html.BeginForm())
+{
+    @Html.TextBox("productname")
+    ;
+    @Html.DropDownList("category",option)
+    <input type= "submit" value="search" class="btn btn-primary"/>
+}
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
