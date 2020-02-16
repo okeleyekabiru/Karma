@@ -5,80 +5,86 @@ using System.Text;
 using System.Threading.Tasks;
 using ShopyEcomerce.ef;
 using ShopyLibrary.Model;
+using System.Drawing;
+using System.IO;
+using System.Net.Mime;
 
 namespace ShopyEcomerce
 {
    public class BusinessLogic
     {
-        
-        
+
+
         public static IEnumerable<Cart> LoadOrdersAndCarts(IEnumerable<Cart> carts)
         {
-            List<Cart> newcarts = new List<Cart>();
-            foreach (var cart in  carts)
+            int tempQuantity;
+
+            Dictionary<string, Cart> Temp = new Dictionary<string, Cart>();
+
+            foreach (var cart in carts)
             {
-                bool isvalid = false;
-                if (newcarts.Count == 0)
+                if (Temp.ContainsKey(cart.ProductName))
                 {
-                    newcarts.Add(cart);
+                    tempQuantity = Temp[cart.ProductName].Quantity += cart.Quantity;
+                    Temp[cart.ProductName].Price *= tempQuantity;
+                }
+                else
+                {
+                    Temp.Add(cart.ProductName, cart);
                 }
 
-                foreach (var item in newcarts)
-                {
-
-                    if (item.ProductName == cart.ProductName)
-                    {
-                        item.Quantity += cart.Quantity;
-                        isvalid = true;
-
-
-                    }
-
-
-                }
-
-                if (isvalid == false)
-                {
-                    newcarts.Add(cart);
-                }
-                
             }
-            return newcarts;
+
+            return Temp.Values.ToList();
+
+
+
         }
-           public static IEnumerable<Order> LoadOrdersAndCarts(IEnumerable<Order> orders)
+        public static IEnumerable<Order> LoadOrdersAndCarts(IEnumerable<Order> orders)
         {
-            List<Order> newcarts = new List<Order>();
-            foreach (var order in  orders)
-            {
-                bool isvalid = false;
-                if (newcarts.Count == 0)
-                {
-                    newcarts.Add(order);
-                }
 
-                foreach (var item in newcarts)
-                {
+            int tempQuantity;
+            Dictionary<string, Order> Temp = new Dictionary<string, Order>();
 
-                    if (item.ProductsName == order.ProductsName)
-                    {
-                        item.Quantity += order.Quantity;
-                        isvalid = true;
-
-
-                    }
-
-
-                }
-
-                if (isvalid == false)
-                {
-                    newcarts.Add(order);
-                }
-                
-            }
-            return newcarts;
-        }
            
+            foreach (var order in orders)
+            {
+                if (Temp.ContainsKey(order.ProductsName))
+                {
+                  tempQuantity =  Temp[order.ProductsName].Quantity += order.Quantity;
+                    Temp[order.ProductsName].ProductPrice *=  tempQuantity;
+                }
+                else
+                {
+                    Temp.Add(order.ProductsName, order);
+                }
 
-    }
+            }
+
+            return Temp.Values.ToList();
+
+
+        }
+
+
+       
+        public static byte[] GetImageFromByteArray(byte[] byteArray)
+
+        {
+            Stream stream = new MemoryStream(byteArray);
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+
+
+
+
+        }
+
+
 }
+  
+   }
+

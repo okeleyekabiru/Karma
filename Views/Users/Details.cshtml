@@ -1,0 +1,70 @@
+﻿@using ShopyLibrary.Model
+@model IEnumerable<ShopyEcomerce.ef.Cart>
+
+@{
+    ViewBag.Title = "Details";
+    var catergory = new string[]
+    {
+        "Mobile",
+        "Tablet",
+        "Laptop",
+        "Headset",
+        "Appliances"
+    };
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cart</h4>
+    <hr />
+    @foreach (var iteml in Model)
+    {
+<dl class="dl-horizontal">
+
+    <dt>
+        @Html.DisplayNameFor(model => model.ProductName)
+    </dt>
+    <dd>
+        @iteml.ProductName
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+
+    <dd>
+        @iteml.Description
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Category)
+    </dt>
+
+    <dd>
+        @catergory[(int)iteml.Category]
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Quantity)
+    </dt>
+
+    <dd>
+        @iteml.Quantity
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Price)
+    </dt>
+
+    <dd>
+        @iteml.Price
+    </dd>
+
+
+
+
+</dl>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = iteml.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+</div>
+

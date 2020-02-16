@@ -43,8 +43,8 @@ namespace ShopyLibrary.Interface
 
         public Order UpdateOrder(Order order)
         {
-            _db.Orders.Attach(order);
-            _db.Entry(order).State = EntityState.Modified;
+            var entry = _db.Entry(order);
+            entry.State = EntityState.Modified;
             return order;
         }
 

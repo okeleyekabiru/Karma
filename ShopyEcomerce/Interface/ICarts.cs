@@ -16,7 +16,12 @@ namespace ShopyLibrary.Interface
       Cart GetCart( int id);
       void Delete(Cart cart);
       Cart Update(Cart cart);
-      bool Commit();
+        bool Commit();
+        void DeleteMutiple(string productname, string Userid);
+
+        IEnumerable<Cart> ShowMultipleCarts(string productname, string Userid);
+
+
 
   }
 }

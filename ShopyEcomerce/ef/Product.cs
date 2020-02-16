@@ -1,3 +1,5 @@
+using ShopyLibrary.Model;
+
 namespace ShopyEcomerce.ef
 {
     using System;
@@ -14,7 +16,7 @@ namespace ShopyEcomerce.ef
 
         public string Description { get; set; }
 
-        public int Category { get; set; }
+        public Category Category { get; set; }
 
         public decimal Price { get; set; }
 
