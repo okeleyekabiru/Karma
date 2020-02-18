@@ -11,7 +11,8 @@ namespace ShopyLibrary.Interface
   public  interface IProducts
   {
       IEnumerable<Product> GetProductsByName(string product, int category);
-      IEnumerable<Product> GetProductsByCatergory(int CategoryEnum);
+      IEnumerable<Product> GetProductsByName(string product);
+        IEnumerable<Product> GetProductsByCatergory(int CategoryEnum);
       Product GetProduct(int id);
       Product DeleteProduct(Product product);
       Product UpdateProduct(Product product);

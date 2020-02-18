@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Shopy.Models;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
 using ShopyLibrary.Interface;
 
@@ -12,10 +14,12 @@ namespace Shopy.Controllers
     public class ProductsController : Controller
     {
         private readonly IProducts _dbProducts;
+        private readonly ICarts _cartsDb;
 
-        public ProductsController(IProducts dbProducts)
+        public ProductsController(IProducts dbProducts, ICarts cartsDb)
         {
             _dbProducts = dbProducts;
+            _cartsDb = cartsDb;
         }
 
         // GET: Products
@@ -55,22 +59,34 @@ namespace Shopy.Controllers
 
             return View();
         }
+
         [HttpPost]
-        public ActionResult AllProduct( string productname, string category)
+        public ActionResult AllProduct(string productname, string category)
         {
-            var model = _dbProducts.GetProductsByName(productname,int.Parse(category));
-            if (model != null)
+            if (category != "")
             {
+                var model = _dbProducts.GetProductsByName(productname, int.Parse(category) + 1);
+                if (model != null)
+                {
+                    return View(model);
+                }
+            }
+            else
+            {
+                var model = _dbProducts.GetProductsByName(productname);
                 return View(model);
             }
 
             return RedirectToAction("NotFound", "Users");
         }
+
         public ActionResult AllProduct()
         {
             var model = _dbProducts.GetAllProducts();
             if (model != null)
             {
+                BusinessLogic.cartImemory.Clear();
+                BusinessLogic.LoadShopingCart(_cartsDb.GetAllCarts());
                 return View(model);
             }
 
@@ -113,6 +129,7 @@ namespace Shopy.Controllers
 
             return View(getProduct);
         }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -124,6 +141,7 @@ namespace Shopy.Controllers
 
             return RedirectToAction("NotFound", "Users");
         }
+
         [HttpPost]
         public ActionResult Edit(Product product)
         {
@@ -131,18 +149,58 @@ namespace Shopy.Controllers
             {
                 return RedirectToAction("NotFound", "Users");
             }
-         var photo =   Request.Files["photo"];
-         Byte[] Content = new BinaryReader(photo.InputStream).ReadBytes(photo.ContentLength);
-         product.Photos = Content;
-        _dbProducts.UpdateProduct(product);
-        if (_dbProducts.Commit())
-         {
-             return RedirectToAction("AllProduct");
-         }
+
+            var photo = Request.Files["photo"];
+            Byte[] Content = new BinaryReader(photo.InputStream).ReadBytes(photo.ContentLength);
+            product.Photos = Content;
+            _dbProducts.UpdateProduct(product);
+            if (_dbProducts.Commit())
+            {
+                return RedirectToAction("AllProduct");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Details(int id, int quantity)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["message"] = "please please specify a valid quantity";
+                return RedirectToAction("Details");
+            }
+
+            var model = _dbProducts.GetProduct(id);
+            if (model == null)
+            {
+                return RedirectToAction("NotFound", "Users");
+            }
+
+            var cart = BusinessLogic.MapCart(model);
+            cart.Quantity = quantity;
+            if (!User.Identity.IsAuthenticated)
+            {
+                BusinessLogic.ListingCarts.Add(cart);
+                Session["Carts"] = BusinessLogic.ListingCarts;
+                return RedirectToAction("AllProduct");
+                 
 
 
-         return View();
+            }
 
+            var userId = (User) Session["Id"];
+
+            cart.User_Id = userId.Id;
+
+            _cartsDb.AddCart(cart);
+
+            if (_cartsDb.Commit())
+            {
+                return RedirectToAction("AllProduct");
+            }
+
+            return RedirectToAction("NotFound", "Users");
         }
     }
 }

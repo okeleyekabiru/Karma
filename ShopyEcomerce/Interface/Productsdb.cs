@@ -19,7 +19,8 @@ namespace ShopyLibrary.Interface
         }
         public IEnumerable<Product> GetProductsByName(string product,int category)
         {
-            var  content =  _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName) || r.ProductName.StartsWith(product) || r.ProductName.StartsWith(product) &&(int) r.Category ==category).OrderBy(r => r.ProductName)
+            
+            var  content =  _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName)  || r.ProductName.StartsWith(product) &&(int) r.Category == category).OrderBy(r => r.ProductName)
                 .OrderBy(r => r.ProductName);
             foreach (var VARIABLE in content)
             {
@@ -28,7 +29,18 @@ namespace ShopyLibrary.Interface
 
             return content;
         }
+        public IEnumerable<Product> GetProductsByName(string product)
+        {
 
+            var content = _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName) || r.ProductName.StartsWith(product)).OrderBy(r => r.ProductName)
+                .OrderBy(r => r.ProductName);
+            foreach (var VARIABLE in content)
+            {
+                VARIABLE.Photos = BusinessLogic.GetImageFromByteArray(VARIABLE.Photos);
+            }
+
+            return content;
+        }
         public IEnumerable<Product> GetProductsByCatergory(int CategoryEnum)
         {
            var  content = _db.Products.Where(r => (int)(r.Category) == CategoryEnum).OrderBy(r => r.ProductName);

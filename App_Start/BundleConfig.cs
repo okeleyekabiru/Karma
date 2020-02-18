@@ -21,10 +21,24 @@ namespace Shopy
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
-
+            bundles.Add(new StyleBundle("~/Content/css/bootstrap").Include("~/Content/bootstrap.min.css", new CssRewriteUrlTransform()));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/availability-calender.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/ion.rangeSlider.css",
+                      "~/Content/ion.rangeSlider.skinFlat.css",
+                      "~/Content/jquerysctipttop.css",
+                      "~/Content/linearicons.css",
+                      "~/Content/magnific-popup.css",
+                      "~/Content/main.css",
+                      "~/Content/nice-select.css",
+                      "~/Content/nouislider.min.css",
+                      "~/Content/owl.carousel.css",
+                      "~/Content/themify-icons.css"
+                      ));
+           
         }
     }
 }

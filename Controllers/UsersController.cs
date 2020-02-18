@@ -1,4 +1,5 @@
-﻿using Shopy.Models;
+﻿using System.Collections.Generic;
+using Shopy.Models;
 using ShopyEcomerce;
 using ShopyEcomerce.ef;
 using ShopyLibrary.Interface;
@@ -9,10 +10,12 @@ namespace Shopy.Controllers
     public class UsersController : Controller
     {
         private readonly ICarts _cartsdb;
+        private readonly IProducts _productsDb;
 
-        public UsersController(ICarts cartsdb)
+        public UsersController(ICarts cartsdb, IProducts productsDb)
         {
             _cartsdb = cartsdb;
+            _productsDb = productsDb;
         }
 
         [HttpGet]
@@ -36,10 +39,27 @@ namespace Shopy.Controllers
             return View(model);
         }
 
-        [Authorize]
+       
         [HttpGet]
+        [Authorize]
         public ActionResult Carts()
         {
+            var userId = (User)Session["Id"];
+            if (User.Identity.IsAuthenticated)
+            {
+                var session = (List<Cart>)Session["Carts"];
+                if (session != null)
+                {
+                    foreach (var VARIABLE in session)
+                    {
+                        VARIABLE.User_Id = userId.Id;
+                        _cartsdb.AddCart(VARIABLE);
+                        _cartsdb.Commit();
+
+                    }
+                }
+            }
+            
             var model = BusinessLogic.LoadOrdersAndCarts(_cartsdb.GetAllCarts());
             if (model == null)
             {
@@ -117,13 +137,16 @@ namespace Shopy.Controllers
             return View(mo);
         }
 
-        [Authorize]
         [HttpPost]
-        public ActionResult Index(Cart cart)
-        {
-            var id = (User) Session["Id"];
-            cart.User_Id = id.Id;
-            var model = _cartsdb.AddCart(cart);
+        public ActionResult Index(int id,int quantity)
+        {// nedd clarification
+         
+            var userId = (User) Session["Id"];
+            var model = _productsDb.GetProduct(id);
+            var cart=  BusinessLogic.MapCart(model);
+            cart.User_Id = userId.Id;
+            cart.Quantity = quantity;
+           _cartsdb.AddCart(cart);
             _cartsdb.Commit();
             return RedirectToAction("Carts");
         }
