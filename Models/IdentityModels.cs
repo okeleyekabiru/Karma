@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ShopyLibrary.Ef;
 using ShopyLibrary.Model;
 
 namespace Shopy.Models
@@ -15,8 +14,7 @@ namespace Shopy.Models
         public string FirstName { get; set; }
         public string lastName { get; set; }
         public Gender Gender { get; set; }
-        public List<Cart> Carts { get; set; }
-        public List<Order> Orders { get; set; }
+       
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -28,9 +26,7 @@ namespace Shopy.Models
 
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Order> Orders { get; set; }
+       
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

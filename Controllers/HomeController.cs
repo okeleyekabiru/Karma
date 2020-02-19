@@ -24,8 +24,7 @@ namespace Shopy.Controllers
             var newmodel = BusinessLogic.GetRandomCart(model);
             if (model != null)
             {
-                BusinessLogic.cartImemory.Clear();
-                BusinessLogic.LoadShopingCart(_cartsDb.GetAllCarts());
+               
                 return View(newmodel);
             }
 
@@ -56,11 +55,17 @@ namespace Shopy.Controllers
            
         }
 
-        public ActionResult About()
+        public ActionResult About(int id)
         {
-            ViewBag.Message = "Your application description page.";
+           
+                if (ModelState.IsValid)
+                {
+                    var model = _dbProducts.GetProduct(id);
+                    return View(model);
+                }
 
-            return View();
+                return RedirectToAction("NotFound", "Users");
+            
         }
 
         public ActionResult Contact()

@@ -46,6 +46,7 @@
     <link rel="stylesheet" href="/Content/ion.rangeSlider.skinFlat.css" />
     <link rel="stylesheet" href="/Content/magnific-popup.css">
     <link rel="stylesheet" href="/Content/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -310,7 +311,7 @@
                 </div>
               
 
-                    <div class="row">
+                    <div class="row products-grid">
                         <!-- single product -->
 
 
@@ -327,31 +328,28 @@
                                         </h6>
                                         <div class="price">
                                             <h6>@item.Price.ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
-                                            <h6 class="l-through">@BusinessLogic.AddToprice(item.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
+                                            <h6 class="l-through"style="color: red">@BusinessLogic.AddToprice(item.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
                                         </div>
-                                        @using (Html.BeginForm("Details", "Products", FormMethod.Post))
-                                        {
-                                            <div class="prd-bottom">
-                                                <input type="hidden" value="@item.Id" name="id"/>
-                                                <input type="hidden" value="1" name="quantity"/>
-                                                <button class="social-info">
-                                                    <span class="ti-bag"></span>
-                                                    <p class="hover-text">add to cart</p>
-                                                </button>
-                                                <a href="" class="social-info">
-                                                    <span class="lnr lnr-heart"></span>
-                                                    <p class="hover-text">Wishlist</p>
-                                                </a>
-                                                <a href="" class="social-info">
-                                                    <span class="lnr lnr-sync"></span>
-                                                    <p class="hover-text">compare</p>
-                                                </a>
-                                                <a href="" class="social-info">
-                                                    <span class="lnr lnr-move"></span>
-                                                    <p class="hover-text">view more</p>
+                                     
+                                            <div class="prd-bottom ">
+                                                <span class="social-info carts" data.id ="@item.Id">
+                                                    <span class="ti-bag carts" data.id ="@item.Id"></span>
+                                                    <p class="hover-text carts" data.id ="@item.Id">add to cart</p>
+                                                </span>
+                                                <span class="social-info wishlist  "data.id ="@item.Id">
+                                                    <span class="lnr lnr-heart wishlist" data.id ="@item.Id"></span>
+                                                    <p class="hover-text wishlist" data.id ="@item.Id">Wishlist</p>
+                                                </span>
+                                                <span class="social-info compare"data.id ="@item.Id">
+                                                    <span class="lnr lnr-sync  compare" data.id ="@item.Id"></span>
+                                                    <p class="hover-text compare" data.id ="@item.Id">compare</p>
+                                                </span>
+                                                <a class="social-info viewmore" href="@Url.Action("Details","Products", new {id = item.Id})" >
+                                                    <span class="lnr lnr-move viewmore"></span>
+                                                    <p class="hover-text viewmore" >view more</p>
                                                 </a>
                                             </div>
-                                        }
+                                       
                                         </div>
                                 </div>
                             </div>
@@ -394,7 +392,7 @@
                                 </h6>
                                 <div class="price">
                                     <h6>@item.Price.ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
-                                    <h6 class="l-through">@BusinessLogic.AddToprice(item.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
+                                    <h6 class="l-through " style="color: red">@BusinessLogic.AddToprice(item.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
 </div>
                                 <div class="prd-bottom">
 
@@ -471,7 +469,7 @@
                             <div class="product-details">
                                 <div class="price">
                                     <h6>@item.Price.ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
-                                    <h6 class="l-through">@BusinessLogic.AddToprice(item.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
+                                    <h6 class="l-through"style="color: red">@BusinessLogic.AddToprice(item.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-USD"))</h6>
                                 </div>
                                 <h4>
                                     @item.ProductName
@@ -751,7 +749,7 @@
     <!--gmaps Js-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
     <script src="~/Content/js/gmaps.min.js"></script>
-    <script src="~/Content/js/main.js"></script>
+    <script defer src="~/Content/js/main.js"></script>
     @Styles.Render("~/Content/css")
 
 </body>

@@ -8,13 +8,14 @@ using ShopyLibrary.Model;
 using System.Drawing;
 using System.IO;
 using System.Net.Mime;
+using Shopy.Models;
 
 namespace ShopyEcomerce
 {
    public class BusinessLogic
     {
 
-        public static List<Cart> cartImemory { get; set; } =  new List<Cart>();
+      
         public  static  List<Cart> ListingCarts { get; set; } = new List<Cart>();
         public static IEnumerable<Cart> LoadOrdersAndCarts(IEnumerable<Cart> carts)
         {
@@ -91,16 +92,11 @@ namespace ShopyEcomerce
             cart.Category = model.Category;
             cart.Description = model.Description;
             cart.Price = model.Price;
+            cart.Photos = model.Photos;
             return cart;
         }
 
-        public static  void LoadShopingCart(IEnumerable<Cart> carts)
-        {
-           
-
-            cartImemory.AddRange(LoadOrdersAndCarts(carts));
-            
-        }
+     
 
         public static decimal AddToprice(decimal price)
         {var divide = (price + 100) / 5;

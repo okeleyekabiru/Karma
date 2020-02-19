@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using ShopyEcomerce
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -10,7 +11,22 @@
             <li>
                 @Html.ActionLink("Hello  " +" "+ User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage",@class="text-black-50 mr-2 nav-link" })
             </li>
-            <li><a href="@Url.Action("Carts","Users")"><span class="glyphicon glyphicon-shopping-cart text-black-50"></span></a></li>
+            <li><a href="@Url.Action("Carts","Users")">
+                <i class="fa fa-shopping-cart " style="font-size:36px"></i>    
+                @if (BusinessLogic.ListingCarts.Count <= 0)
+                {
+                    <span class="d-none carts-display"> @BusinessLogic.ListingCarts.Count</span>
+
+                }
+                else
+                {
+                    <span class="carts-display">  @BusinessLogic.ListingCarts.Count</span>
+
+                }
+
+
+
+</a></li>
             <li ><a href="javascript:document.getElementById('logoutForm').submit()" class="text-black-50 nav-link">Sign out</a></li>
         </ul>
     </div>
@@ -18,9 +34,24 @@
 }
 else
 {<div>
-    <ul class="nav navbar-nav navbar-right  ">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "text-black-50 ml-5 nav-link" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "text-black-50 ml-2 nav-link " })</li>
-    </ul>
+     <ul class="nav navbar-nav navbar-right ">
+         <a href="@Url.Action("Carts","Users")">
+             <i class="fa fa-shopping-cart " style="font-size:36px"></i>
+             @if (BusinessLogic.ListingCarts.Count <= 0)
+             {
+                 <span class="d-none carts-display"> @BusinessLogic.ListingCarts.Count</span>
+
+             }
+             else
+             {
+         <span class="carts-display">  @BusinessLogic.ListingCarts.Count</span>
+               
+             }
+
+         </a>
+
+         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "text-black-50 ml-5 nav-link" })</li>
+         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "text-black-50 ml-2 nav-link " })</li>
+     </ul>
  </div>
 }

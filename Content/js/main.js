@@ -1,6 +1,30 @@
 
 $(document).ready(function(){
-	"use strict";
+  "use strict";
+  $(".products-grid").on("click", function (e) {
+    if (e.target.classList.contains("carts")) {
+  var itemid = e.target.attributes['data.id'].value;
+
+  $.ajax({
+    url: 'https://localhost:44315/products/details',
+        data: { 'id': itemid,  'quantity': 1 },
+        type: "post",
+        cache: false,
+    success: function (m) {
+      var len = $(".carts-display").length;
+      for (var i = 0; i < len; i++) {
+        $(".carts-display")[i].innerText = parseInt($(".carts-display")[i].innerText) + 1;
+      }
+      console.log($(".carts-display"));
+
+    },
+        error: function (e) {
+         console.log("failed to submit");
+        }
+      });
+    } 
+   
+  });
 
 	var window_width 	 = $(window).width(),
 	window_height 		 = window.innerHeight,

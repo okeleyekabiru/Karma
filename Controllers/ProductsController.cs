@@ -85,8 +85,6 @@ namespace Shopy.Controllers
             var model = _dbProducts.GetAllProducts();
             if (model != null)
             {
-                BusinessLogic.cartImemory.Clear();
-                BusinessLogic.LoadShopingCart(_cartsDb.GetAllCarts());
                 return View(model);
             }
 
@@ -165,6 +163,8 @@ namespace Shopy.Controllers
         [HttpPost]
         public ActionResult Details(int id, int quantity)
         {
+           
+            
             if (!ModelState.IsValid)
             {
                 TempData["message"] = "please please specify a valid quantity";
@@ -179,12 +179,14 @@ namespace Shopy.Controllers
 
             var cart = BusinessLogic.MapCart(model);
             cart.Quantity = quantity;
+            cart.Photos = BusinessLogic.GetImageFromByteArray(model.Photos);
             if (!User.Identity.IsAuthenticated)
             {
                 BusinessLogic.ListingCarts.Add(cart);
                 Session["Carts"] = BusinessLogic.ListingCarts;
-                return RedirectToAction("AllProduct");
-                 
+
+                return RedirectToAction("Index", "Home");
+
 
 
             }
@@ -194,10 +196,14 @@ namespace Shopy.Controllers
             cart.User_Id = userId.Id;
 
             _cartsDb.AddCart(cart);
+           
 
             if (_cartsDb.Commit())
             {
-                return RedirectToAction("AllProduct");
+               
+                BusinessLogic.ListingCarts.Add(cart);
+                Session["Carts"] = BusinessLogic.ListingCarts;
+                return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("NotFound", "Users");
