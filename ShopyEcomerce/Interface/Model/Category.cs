@@ -12,7 +12,12 @@ namespace ShopyLibrary.Model
         Tablet,
         Laptop,
         Headset,
-        Appliances
+        Appliances,
+        Shoes,
+        Food,
+        BeautyProduct,
+        
+
 
     }
 }

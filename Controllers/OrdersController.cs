@@ -128,7 +128,7 @@ namespace Shopy.Controllers
                 return RedirectToAction("Index");
           
 
-            return View();
+            
         }
 
       

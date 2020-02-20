@@ -8,13 +8,15 @@ using ShopyLibrary.Model;
 using System.Drawing;
 using System.IO;
 using System.Net.Mime;
+using Shopy.Models;
 
 namespace ShopyEcomerce
 {
    public class BusinessLogic
     {
 
-
+      
+        public  static  List<Cart> ListingCarts { get; set; } = new List<Cart>();
         public static IEnumerable<Cart> LoadOrdersAndCarts(IEnumerable<Cart> carts)
         {
             int tempQuantity;
@@ -83,7 +85,40 @@ namespace ShopyEcomerce
 
         }
 
+        public static Cart MapCart(Product model)
+        {
+            Cart cart = new Cart();
+            cart.ProductName = model.ProductName;
+            cart.Category = model.Category;
+            cart.Description = model.Description;
+            cart.Price = model.Price;
+            cart.Photos = model.Photos;
+            return cart;
+        }
 
+     
+
+        public static decimal AddToprice(decimal price)
+        {var divide = (price + 100) / 5;
+            return price + divide;
+        }
+
+        public static IEnumerable<Product> GetRandomCart(IEnumerable<Product> products)
+        {
+            var List =new List<Product>();
+            var length = products.ToList();
+            int count = 0;
+            Random number = new Random();
+            while (count < 8)
+            {
+                int index = number.Next(1, length.Count);
+                List.Add(length[index]);
+                count++;
+
+            }
+
+            return List;
+        }
 }
   
    }

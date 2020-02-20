@@ -37,6 +37,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Shopy">
+      <HintPath>..\bin\Shopy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,17 +63,22 @@
     <Compile Include="Interface\ICarts.cs" />
     <Compile Include="Interface\IOrders.cs" />
     <Compile Include="Interface\IProducts.cs" />
-    <Compile Include="Interface\Model\Cart.cs" />
     <Compile Include="Interface\Model\Category.cs" />
     <Compile Include="Interface\Model\Gender.cs" />
-    <Compile Include="Interface\Model\Order.cs" />
-    <Compile Include="Interface\Model\Product.cs" />
-    <Compile Include="Interface\Model\Users.cs" />
     <Compile Include="Interface\OrdersDb.cs" />
     <Compile Include="Interface\Productsdb.cs" />
+    <Compile Include="Migrations\202002182259106_photos.cs" />
+    <Compile Include="Migrations\202002182259106_photos.Designer.cs">
+      <DependentUpon>202002182259106_photos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202002182259106_photos.resx">
+      <DependentUpon>202002182259106_photos.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
