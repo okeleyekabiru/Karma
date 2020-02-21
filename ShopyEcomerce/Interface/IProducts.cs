@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
 
 
-namespace ShopyLibrary.Interface
+namespace ShopyLibrary
 {
   public  interface IProducts
   {
@@ -18,6 +19,7 @@ namespace ShopyLibrary.Interface
       Product UpdateProduct(Product product);
       IEnumerable<Product> GetAllProducts();
       void AddProduct(Product product);
+      IEnumerable<Product> SortedProducts(string sorted);
       bool Commit();
     }
 }

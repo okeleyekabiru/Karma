@@ -3,7 +3,7 @@ using System.Linq;
 using Shopy.Models;
 using ShopyEcomerce;
 using ShopyEcomerce.ef;
-using ShopyLibrary.Interface;
+using ShopyLibrary;
 using System.Web.Mvc;
 
 namespace Shopy.Controllers

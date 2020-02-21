@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShopyEcomerce.ef;
-using ShopyLibrary.Model;
-using System.Drawing;
 using System.IO;
-using System.Net.Mime;
-using Shopy.Models;
+using System.Linq;
+using ShopyEcomerce.ef;
 
 namespace ShopyEcomerce
 {
-   public class BusinessLogic
+    public class BusinessLogic
     {
 
-      
-        public  static  List<Cart> ListingCarts { get; set; } = new List<Cart>();
+
+        public static List<Cart> ListingCarts { get; set; } = new List<Cart>();
         public static IEnumerable<Cart> LoadOrdersAndCarts(IEnumerable<Cart> carts)
         {
             int tempQuantity;
@@ -48,13 +42,13 @@ namespace ShopyEcomerce
             int tempQuantity;
             Dictionary<string, Order> Temp = new Dictionary<string, Order>();
 
-           
+
             foreach (var order in orders)
             {
                 if (Temp.ContainsKey(order.ProductsName))
                 {
-                  tempQuantity =  Temp[order.ProductsName].Quantity += order.Quantity;
-                    Temp[order.ProductsName].ProductPrice *=  tempQuantity;
+                    tempQuantity = Temp[order.ProductsName].Quantity += order.Quantity;
+                    Temp[order.ProductsName].ProductPrice *= tempQuantity;
                 }
                 else
                 {
@@ -69,7 +63,7 @@ namespace ShopyEcomerce
         }
 
 
-       
+
         public static byte[] GetImageFromByteArray(byte[] byteArray)
 
         {
@@ -96,16 +90,17 @@ namespace ShopyEcomerce
             return cart;
         }
 
-     
+
 
         public static decimal AddToprice(decimal price)
-        {var divide = (price + 100) / 5;
+        {
+            var divide = (price + 100) / 5;
             return price + divide;
         }
 
         public static IEnumerable<Product> GetRandomCart(IEnumerable<Product> products)
         {
-            var List =new List<Product>();
+            var List = new List<Product>();
             var length = products.ToList();
             int count = 0;
             Random number = new Random();
@@ -119,7 +114,7 @@ namespace ShopyEcomerce
 
             return List;
         }
+    }
+
 }
-  
-   }
 

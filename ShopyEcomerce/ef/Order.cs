@@ -1,3 +1,5 @@
+using ShopyLibrary;
+
 namespace ShopyEcomerce.ef
 {
     using System;
@@ -16,7 +18,7 @@ namespace ShopyEcomerce.ef
 
         public DateTime DatePurchaced { get; set; }
 
-        public int Category { get; set; }
+        public Category Category { get; set; }
 
         public int Quantity { get; set; }
 

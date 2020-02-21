@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
 
 
-namespace ShopyLibrary.Interface
+namespace ShopyLibrary
 {
   public  class OrdersDb:IOrders
     {

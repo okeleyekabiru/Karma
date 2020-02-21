@@ -13,6 +13,7 @@ function getTimeRemaining(endtime) {
   };
 }
 
+
 function initializeClock(id, endtime) {
   var clock = document.getElementById(id);
   var daysSpan = clock.querySelector('.days');
@@ -37,5 +38,6 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-var deadline = new Date(Date.parse(new Date()) + 30 * 24 * 60 * 60 * 1000);
-initializeClock('clockdiv', deadline);
+  var deadline = new Date(Date.parse(new Date()) + 30 * 24 * 60 * 60 * 1000);
+  initializeClock('clockdiv', deadline);
+

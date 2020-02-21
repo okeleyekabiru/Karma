@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShopyEcomerce.ef;
 
-namespace ShopyLibrary.Interface
-{
+namespace ShopyLibrary { 
   public  interface IOrders
   {
       Order AddOrder(Order order);

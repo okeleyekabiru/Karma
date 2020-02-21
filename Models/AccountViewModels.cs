@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ShopyLibrary.Model;
+using ShopyLibrary;
+
 
 namespace Shopy.Models
 {

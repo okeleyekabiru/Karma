@@ -5,14 +5,14 @@ namespace ShopyEcomerce.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ShopyEcomerce.ef.EcommerceDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<EcommerceDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ShopyEcomerce.ef.EcommerceDb context)
+        protected override void Seed(EcommerceDb context)
         {
             //  This method will be called after migrating to the latest version.
 

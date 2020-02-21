@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Shopy.Models;
 using ShopyEcomerce;
 using ShopyEcomerce.ef;
+using ShopyLibrary;
 using ShopyLibrary.Interface;
 
 namespace Shopy.Controllers

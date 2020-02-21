@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model IEnumerable<ShopyEcomerce.ef.Cart>
+@model IEnumerable<ShopyEcomerce.Cart>
 
 @{
     Layout = null;
@@ -142,13 +142,13 @@
 
                     <div class="s_Product_carousel">
                         <div class="single-prd-item">
-                            <img class="img-fluid"  src="data:image/png;base64,@Convert.ToBase64String(@item[0].Photos, 0, @item[0].Photos.Length)" alt="">
+                            <img class="img-fluid"  src="@item[0].Photos" alt="">
                         </div>
                         <div class="single-prd-item">
-                            <img class="img-fluid"  src="data:image/png;base64,@Convert.ToBase64String(@item[0].Photos, 0, @item[0].Photos.Length)" alt="">
+                            <img class="img-fluid"  src="@item[0].Photos" alt="">
                         </div>
                         <div class="single-prd-item">
-                            <img class="img-fluid" src="data:image/png;base64,@Convert.ToBase64String(@item[0].Photos, 0, @item[0].Photos.Length)" alt="">
+                            <img class="img-fluid" src="@item[0].Photos" alt="">
                         </div>
                     </div>
                 </div>

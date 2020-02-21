@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
 
 
 
-namespace ShopyLibrary.Interface
+namespace ShopyLibrary
 {
   public  interface ICarts
   {
