@@ -1,6 +1,6 @@
-using ShopyLibrary.Model;
+using ShopyLibrary;
 
-namespace ShopyEcomerce.ef
+namespace ShopyEcomerce
 {
     using System;
     using System.Collections.Generic;
@@ -18,13 +18,13 @@ namespace ShopyEcomerce.ef
 
         public string Description { get; set; }
 
-        public Category Category { get; set; }
+        public Category  Category { get; set; }
 
         public decimal Price { get; set; }
 
         [StringLength(128)]
         public string User_Id { get; set; }
 
-        public byte[] Photos { get; set; }
+        public string Photos { get; set; }
     }
 }

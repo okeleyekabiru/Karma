@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ShopyEcomerce;
 using ShopyEcomerce.ef;
 
-namespace ShopyLibrary.Interface
+namespace ShopyLibrary
 {
   public  class Productsdb:IProducts
     {
@@ -22,10 +22,7 @@ namespace ShopyLibrary.Interface
             
             var  content =  _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName)  || r.ProductName.StartsWith(product) &&(int) r.Category == category).OrderBy(r => r.ProductName)
                 .OrderBy(r => r.ProductName);
-            foreach (var VARIABLE in content)
-            {
-                VARIABLE.Photos = BusinessLogic.GetImageFromByteArray(VARIABLE.Photos);
-            }
+          
 
             return content;
         }
@@ -34,20 +31,13 @@ namespace ShopyLibrary.Interface
 
             var content = _db.Products.Where(r => string.IsNullOrEmpty(r.ProductName) || r.ProductName.StartsWith(product)).OrderBy(r => r.ProductName)
                 .OrderBy(r => r.ProductName);
-            foreach (var VARIABLE in content)
-            {
-                VARIABLE.Photos = BusinessLogic.GetImageFromByteArray(VARIABLE.Photos);
-            }
-
+          
             return content;
         }
         public IEnumerable<Product> GetProductsByCatergory(int CategoryEnum)
         {
            var  content = _db.Products.Where(r => (int)(r.Category) == CategoryEnum).OrderBy(r => r.ProductName);
-           foreach (var VARIABLE in content)
-           {
-               VARIABLE.Photos = BusinessLogic.GetImageFromByteArray(VARIABLE.Photos);
-           }
+   
 
            return content;
         }
@@ -55,12 +45,7 @@ namespace ShopyLibrary.Interface
         public Product GetProduct(int id)
         {
            var content=_db.Products.Find(id);
-           if (content != null)
-           {
-
-               content.Photos = BusinessLogic.GetImageFromByteArray(content.Photos);
-           }
-
+        
            return content;
         }
 
@@ -83,10 +68,7 @@ namespace ShopyLibrary.Interface
         {
            
            var content =  _db.Products.OrderBy(r => r.ProductName).ToList();
-           foreach (var VARIABLE in content)
-           {
-               VARIABLE.Photos = BusinessLogic.GetImageFromByteArray(VARIABLE.Photos);
-           }
+    
 
            return content;
         }
@@ -94,6 +76,17 @@ namespace ShopyLibrary.Interface
         public void AddProduct(Product product)
         {
             _db.Products.Add(product);
+        }
+
+        public IEnumerable<Product> SortedProducts(string sorted)
+        {
+            if (sorted.Equals("price"))
+            {
+              return  _db.Products.OrderBy(r => r.ProductName);
+            }
+
+            return _db.Products.OrderBy(r => r.Price);
+
         }
 
         public bool Commit()

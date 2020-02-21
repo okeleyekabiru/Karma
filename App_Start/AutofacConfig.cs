@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using ShopyEcomerce;
 using ShopyEcomerce.ef;
+using ShopyLibrary;
 using ShopyLibrary.Interface;
 
 

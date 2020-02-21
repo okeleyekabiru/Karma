@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Shopy.Models;
 using ShopyEcomerce;
 using ShopyEcomerce.ef;
+using ShopyLibrary;
 using ShopyLibrary.Interface;
+using WebGrease.Configuration;
 
 namespace Shopy.Controllers
 {
@@ -38,12 +43,8 @@ namespace Shopy.Controllers
                     //   ViewBag
                     return View();
                 }
-
                 var photo = Request.Files["photo"];
-
-                Byte[] Content = new BinaryReader(photo.InputStream).ReadBytes(photo.ContentLength);
-
-                product.Photos = Content;
+                product.Photos = CloudinaryUploader.Upload(photo);
                 _dbProducts.AddProduct(product);
                 if (_dbProducts.Commit())
                 {
@@ -86,6 +87,17 @@ namespace Shopy.Controllers
             if (model != null)
             {
                 return View(model);
+            }
+
+            return RedirectToAction("NotFound", "Users");
+        }
+
+        public ActionResult ProductsPage()
+        {
+            var model = _dbProducts.GetAllProducts();
+            if (model != null)
+            {
+                return Json(model, JsonRequestBehavior.AllowGet);
             }
 
             return RedirectToAction("NotFound", "Users");
@@ -149,8 +161,6 @@ namespace Shopy.Controllers
             }
 
             var photo = Request.Files["photo"];
-            Byte[] Content = new BinaryReader(photo.InputStream).ReadBytes(photo.ContentLength);
-            product.Photos = Content;
             _dbProducts.UpdateProduct(product);
             if (_dbProducts.Commit())
             {
@@ -179,7 +189,6 @@ namespace Shopy.Controllers
 
             var cart = BusinessLogic.MapCart(model);
             cart.Quantity = quantity;
-            cart.Photos = BusinessLogic.GetImageFromByteArray(model.Photos);
             if (!User.Identity.IsAuthenticated)
             {
                 BusinessLogic.ListingCarts.Add(cart);
@@ -207,6 +216,19 @@ namespace Shopy.Controllers
             }
 
             return RedirectToAction("NotFound", "Users");
+        }
+
+        public ActionResult LoadAllProduct(string sorted ="name")
+        {
+            var model =_dbProducts.SortedProducts(sorted);
+            return Json(
+                model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Pagination(int index)
+        {
+
+
         }
     }
 }

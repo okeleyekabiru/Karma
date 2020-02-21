@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ShopyEcomerce;
+using ShopyLibrary;
 using ShopyLibrary.Interface;
+
 
 namespace Shopy.Controllers
 {
@@ -55,17 +57,19 @@ namespace Shopy.Controllers
            
         }
 
-        public ActionResult About(int id)
+        public ActionResult About()
         {
-           
-                if (ModelState.IsValid)
-                {
-                    var model = _dbProducts.GetProduct(id);
-                    return View(model);
-                }
 
-                return RedirectToAction("NotFound", "Users");
-            
+
+            var model = _dbProducts.GetAllProducts();
+            if (model != null)
+            {
+
+                return View(BusinessLogic.GetRandomCart(model));
+            }
+
+            return RedirectToAction("NotFound", "Users");
+
         }
 
         public ActionResult Contact()
@@ -74,5 +78,7 @@ namespace Shopy.Controllers
 
             return View();
         }
+
+     
     }
 }

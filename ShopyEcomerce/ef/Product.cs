@@ -1,6 +1,8 @@
-using ShopyLibrary.Model;
 
-namespace ShopyEcomerce.ef
+
+using ShopyLibrary;
+
+namespace ShopyEcomerce
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +22,6 @@ namespace ShopyEcomerce.ef
 
         public decimal Price { get; set; }
 
-        public byte[] Photos { get; set; }
+        public string Photos { get; set; }
     }
 }
