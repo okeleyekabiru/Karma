@@ -116,36 +116,49 @@ $(document).ready(function() {
             });
 
         });
-    var page = 0;
-    var sort = 6;
-    var data = { page: page, numberview: sort }
-    $(".mypage").on("click",
-        function() {
-            page += 1;
-            console.log(page);
-            $.ajax({
-                url: "https://localhost:44315/Products/Pagination",
-                data: data,
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        });
-    $(".selectamounttoshow").on("change",
-        function(e) {
-            sort = parseInt($(this).children("option:selected").val());
 
-            $.ajax({
-                url: "https://localhost:44315/Products/Pagination",
-                data: data,
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                }
+   
+    KnowNow = (target) => {
+        $.get("https://localhost:44315/Products/Pagination?numberview=" + target.value, function (data) {
+            $(".newpro").empty();
+            data.forEach(item => {
+                var htmlstring = ` <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <img class="img-fluid" style="height: 271px;" src="${item.Photos}" alt="">
+                                    <div class="product-details">
+                                        <h6>
+                                            <h3>${item.ProductName}</h3>"          </h6>
+                                        <div class="price">
+                                            <h6>$${item.Price}</h6>
+                                            <h6 class="l-through" style="color: red">$ ${AddToprice(item.Price)}</h6>
+                                            <input type="hidden" value="@seven" />
+                                        </div>
+                                        <div class="prd-bottom">
+                                            <span class="social-info carts" data.id="${item.Id}">
+                                             <span class="ti-bag carts" data.id="${item.Id}"></span>
+                                                <p class="hover-text carts" data.id="${item.Id}">add to cart</p>
+                                            </span>
+                                            <span class="social-info wishlist  " data.id="${item.Id}">
+                                                <span class="lnr lnr-heart wishlist" data.id=${item.Id}"></span>
+                                                <p class="hover-text wishlist" data.id="${item.Id}">Wishlist</p>
+                                            </span>
+                                            <span class="social-info compare" data.id="${item.Id}">
+                                                <span class="lnr lnr-sync  compare" data.id="${item.Id}"></span>
+                                                <p class="hover-text compare" data.id="${item.Id}">compare</p>
+                                            </span>
+                                            <span class="social-info viewmore" onclick=redirectAction(${item.Id
+                    }) ><span>
+                                                <span class="lnr lnr-move viewmore"></span><p class="hover-text viewmore">view more</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          `;
+                $(".newpro").append(htmlstring);
             });
-        });
-
+        })
+    };
 
     $(".Allcategories").on("click",
         function(e) {
@@ -200,6 +213,26 @@ $(document).ready(function() {
 
             });
 
+        });
+    $(document).on("click",
+        ".newpro",
+        function(e) {
+            if (e.target.classList.contains("carts")) {
+                var itemid = e.target.attributes['data.id'].value;
+
+                $.ajax({
+                    url: 'https://localhost:44315/products/details',
+                    data: { 'id': itemid, 'quantity': 1 },
+                    type: "post",
+                    cache: false,
+                    success: function (data) {
+                        console.log({ "status": "successfully" });
+                    },
+                    error: function(e) {
+                        console.log({"status": "failed"});
+                    }
+                });
+            }
         });
 
 });

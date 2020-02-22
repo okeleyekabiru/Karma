@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Shopy.Models;
-using ShopyEcomerce;
 using ShopyEcomerce.ef;
 using ShopyLibrary;
 using System.Web.Mvc;
+using ShopyEcomerce;
 
 namespace Shopy.Controllers
 {
@@ -42,15 +43,19 @@ namespace Shopy.Controllers
 
        
         [HttpGet]
-        [Authorize]
         public ActionResult Carts()
         {
-            var userId = (User)Session["Id"];
-            if (User.Identity.IsAuthenticated)
+            IEnumerable<Cart> model = new List<Cart>();
+            List<Cart>  session = new List<Cart>();
+            try
             {
-                var session = (List<Cart>)Session["Carts"];
+              session = (List<Cart>)Session["Carts"];
                 if (session != null)
-                {
+            {
+                if (User.Identity.IsAuthenticated)
+            {
+                var userId = (User)Session["Id"];
+               
                     foreach (var VARIABLE in session)
                     {
                         VARIABLE.User_Id = userId.Id;
@@ -58,15 +63,25 @@ namespace Shopy.Controllers
                         _cartsdb.Commit();
 
                     }
+                     model = BusinessLogic.LoadOrdersAndCarts(_cartsdb.GetAllCarts());
+                     return View(model);
+                }
+                
+            }
+                else
+                {
+                    return RedirectToAction("NotFound");
                 }
             }
-            
-            var model = BusinessLogic.LoadOrdersAndCarts(_cartsdb.GetAllCarts());
-            if (model == null)
+            catch (Exception e)
             {
-                return RedirectToAction("NotFound");
+                Console.WriteLine(e);
+                throw;
             }
+
+            model = BusinessLogic.LoadOrdersAndCarts(session);
             return View(model);
+
         }
 
         [Authorize]
@@ -141,7 +156,10 @@ namespace Shopy.Controllers
         [HttpPost]
         public ActionResult Index(int id,int quantity)
         {// nedd clarification
-         
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("NotFound");
+            }
             var userId = (User) Session["Id"];
             var model = _productsDb.GetProduct(id);
             var cart=  BusinessLogic.MapCart(model);

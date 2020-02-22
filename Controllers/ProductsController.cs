@@ -189,33 +189,36 @@ namespace Shopy.Controllers
 
             var cart = BusinessLogic.MapCart(model);
             cart.Quantity = quantity;
-            if (!User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-                BusinessLogic.ListingCarts.Add(cart);
-                Session["Carts"] = BusinessLogic.ListingCarts;
+                var userId = (User)Session["Id"];
+                cart.User_Id = userId.Id;
+               
+                _cartsDb.AddCart(cart);
 
-                return RedirectToAction("Index", "Home");
+
+                if (_cartsDb.Commit())
+                {
+
+                    BusinessLogic.ListingCarts.Add(cart);
+                    Session["Carts"] = BusinessLogic.ListingCarts;
+                    return RedirectToAction("Index", "Home");
+                }
 
 
 
             }
-
-            var userId = (User) Session["Id"];
-
-            cart.User_Id = userId.Id;
-
-            _cartsDb.AddCart(cart);
-           
-
-            if (_cartsDb.Commit())
+            else
             {
-               
                 BusinessLogic.ListingCarts.Add(cart);
                 Session["Carts"] = BusinessLogic.ListingCarts;
+
                 return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("NotFound", "Users");
+
+
         }
 
         public ActionResult LoadAllProduct(string sorted ="name")
@@ -229,7 +232,7 @@ namespace Shopy.Controllers
                 model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Pagination(int index = 1,int numberview = 6)
+        public ActionResult Pagination(int numberview = 6, int index = 1)
         {
             if (!ModelState.IsValid)
             {

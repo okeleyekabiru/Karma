@@ -18,9 +18,9 @@ namespace ShopyLibrary
         {
             _db = db;
         }
-        public Order AddOrder(Order order)
+        public IEnumerable<Order> AddOrder(IEnumerable<Order> order)
         {
-            _db.Orders.Add(order);
+            _db.Orders.AddRange(order);
             return order;
         }
 

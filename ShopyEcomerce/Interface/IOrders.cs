@@ -8,7 +8,7 @@ using ShopyEcomerce.ef;
 namespace ShopyLibrary { 
   public  interface IOrders
   {
-      Order AddOrder(Order order);
+    IEnumerable<Order> AddOrder(IEnumerable<Order> order);
       Order GetOrder(int id);
       IEnumerable<Order> GetAllOrder(string userId);
       void cancelOrder(IEnumerable<Order> order);
