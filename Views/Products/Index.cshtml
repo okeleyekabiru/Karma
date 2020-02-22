@@ -80,11 +80,9 @@
                     product.classList.add("alert-danger");
                     pro.disabled = true;
 
-                } else if (file < 1024) {
-                    product.textContent = "File Too small";
-                    pro.disabled = true;
-
                 } else {
+                    pro.disabled = false;
+                    product.textContent = "";
                     document.getElementById('size').innerHTML = '<b>'
                         + file + '</b> KB';
                 }

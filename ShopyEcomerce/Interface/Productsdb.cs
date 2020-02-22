@@ -89,6 +89,23 @@ namespace ShopyLibrary
 
         }
 
+        public int CountDb()
+        {
+            return _db.Products.Count();
+        }
+
+        public IEnumerable<Product> Pagination(int page , int numberview)
+        {
+            return _db.Products.OrderBy(r=> r.ProductName).Skip((page - 1) * numberview).ToList().Take(numberview);
+
+
+        }
+
+        public IEnumerable<Product> ProductByCategory(int catergory)
+        {
+            return _db.Products.Where(r => (int) r.Category == catergory).ToList();
+        }
+
         public bool Commit()
         {
             return _db.SaveChanges() > 0;
