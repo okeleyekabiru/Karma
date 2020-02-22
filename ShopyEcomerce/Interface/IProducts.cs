@@ -20,6 +20,9 @@ namespace ShopyLibrary
       IEnumerable<Product> GetAllProducts();
       void AddProduct(Product product);
       IEnumerable<Product> SortedProducts(string sorted);
+      int CountDb();
+      IEnumerable<Product> Pagination(int page,int numberview);
+      IEnumerable<Product> ProductByCategory(int catergory);
       bool Commit();
     }
 }

@@ -220,15 +220,37 @@ namespace Shopy.Controllers
 
         public ActionResult LoadAllProduct(string sorted ="name")
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("NotFound", "Users");
+            }
             var model =_dbProducts.SortedProducts(sorted);
             return Json(
                 model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Pagination(int index)
+        public ActionResult Pagination(int index = 1,int numberview = 6)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("NotFound", "Users");
+            }
 
+            var  count = 0;
+           count  += index;
+           var model = _dbProducts.Pagination(count, numberview);
+           return Json(model, JsonRequestBehavior.AllowGet);
+        }
 
+        public ActionResult LoadCategory(int category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("NotFound", "Users");
+            }
+        
+            var model = _dbProducts.GetProductsByCatergory(category);
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
     }
 }
