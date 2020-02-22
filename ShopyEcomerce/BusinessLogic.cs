@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
+using Shopy.Models;
 using ShopyEcomerce.ef;
 
 namespace ShopyEcomerce
@@ -11,6 +13,7 @@ namespace ShopyEcomerce
 
 
         public static List<Cart> ListingCarts { get; set; } = new List<Cart>();
+
         public static IEnumerable<Cart> LoadOrdersAndCarts(IEnumerable<Cart> carts)
         {
             int tempQuantity;
@@ -36,6 +39,7 @@ namespace ShopyEcomerce
 
 
         }
+
         public static IEnumerable<Order> LoadOrdersAndCarts(IEnumerable<Order> orders)
         {
 
@@ -90,7 +94,27 @@ namespace ShopyEcomerce
             return cart;
         }
 
+        public static IEnumerable<Order> MapCartToTher(List<Cart> carts)
+        {
+            var orders = new List<Order>();
+          var order = new Order();
 
+          
+            foreach (var cart in carts)
+            {
+                order.Quantity = cart.Quantity;
+                order.Category = cart.Category;
+                order.DatePurchaced = DateTime.Now;
+                order.User_Id = cart.User_Id;
+                order.ProductPrice = cart.Price;
+                order.ProductsName = cart.ProductName;
+
+            }
+
+            return orders;
+
+
+        }
 
         public static decimal AddToprice(decimal price)
         {
@@ -114,7 +138,17 @@ namespace ShopyEcomerce
 
             return List;
         }
-    }
 
+        public static decimal TotalPrice(IEnumerable<Cart> Carts)
+        {
+            decimal total = 0m;
+            foreach (var VARIABLE in Carts)
+            {
+                total += VARIABLE.Price;
+            }
+
+            return total;
+        }
+    }
 }
 
