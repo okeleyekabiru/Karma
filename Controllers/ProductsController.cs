@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using Shopy.Models;
 using ShopyEcomerce;
-using ShopyEcomerce.ef;
 using ShopyLibrary;
-using ShopyLibrary.Interface;
-using WebGrease.Configuration;
 
 namespace Shopy.Controllers
 {
@@ -20,6 +12,7 @@ namespace Shopy.Controllers
     {
         private readonly IProducts _dbProducts;
         private readonly ICarts _cartsDb;
+        private static int? pageindex;
 
         public ProductsController(IProducts dbProducts, ICarts cartsDb)
         {
@@ -64,6 +57,7 @@ namespace Shopy.Controllers
         [HttpPost]
         public ActionResult AllProduct(string productname, string category)
         {
+           
             if (category != "")
             {
                 var model = _dbProducts.GetProductsByName(productname, int.Parse(category) + 1);
@@ -92,12 +86,20 @@ namespace Shopy.Controllers
             return RedirectToAction("NotFound", "Users");
         }
 
-        public ActionResult ProductsPage()
+        public ActionResult ProductsPage(int? pageNumber, int? pageIndex)
         {
-            var model = _dbProducts.GetAllProducts();
+            IEnumerable<Product> model = _dbProducts.GetAllProducts();
+            if (pageIndex.HasValue && pageIndex.HasValue)
+            {
+                pageindex = pageIndex += 1;
+             var page = model.Skip(
+                    pageNumber.Value *(pageIndex.Value - 1)).Take(pageNumber.Value);
+                return Json(page, JsonRequestBehavior.AllowGet);
+            }
+
             if (model != null)
             {
-                return Json(model, JsonRequestBehavior.AllowGet);
+                return Json(model.Take(6), JsonRequestBehavior.AllowGet);
             }
 
             return RedirectToAction("NotFound", "Users");

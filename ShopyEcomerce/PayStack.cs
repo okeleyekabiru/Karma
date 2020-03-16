@@ -22,11 +22,9 @@ namespace ShopyEcomerce
         return response.Data.AuthorizationUrl;
 
       }
-
-      else
-      {
+    
         return response.Message;
-      }
+      
       
 
   }

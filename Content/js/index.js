@@ -5,6 +5,9 @@ $(document).ready(function() {
         var divide = (price + 100) / 5;
         return price + divide + price;
     }
+
+   
+  
     $("#selectsort").on("change",
         function(e) {
             var sort = $(this).children("option:selected").val();
@@ -119,10 +122,11 @@ $(document).ready(function() {
 
    
     KnowNow = (target) => {
-        $.get("https://localhost:44315/Products/Pagination?numberview=" + target.value, function (data) {
-            $(".newpro").empty();
-            data.forEach(item => {
-                var htmlstring = ` <div class="col-lg-4 col-md-6">
+        $.get("https://localhost:44315/Products/Pagination?numberview=" + target.value,
+            function(data) {
+                $(".newpro").empty();
+                data.forEach(item => {
+                    var htmlstring = ` <div class="col-lg-4 col-md-6">
                                 <div class="single-product">
                                     <img class="img-fluid" style="height: 271px;" src="${item.Photos}" alt="">
                                     <div class="product-details">
@@ -147,7 +151,7 @@ $(document).ready(function() {
                                                 <p class="hover-text compare" data.id="${item.Id}">compare</p>
                                             </span>
                                             <span class="social-info viewmore" onclick=redirectAction(${item.Id
-                    }) ><span>
+                        }) ><span>
                                                 <span class="lnr lnr-move viewmore"></span><p class="hover-text viewmore">view more</p>
                                             </a>
                                         </div>
@@ -155,10 +159,11 @@ $(document).ready(function() {
                                 </div>
                             </div>
                           `;
-                $(".newpro").append(htmlstring);
+                    $(".newpro").append(htmlstring);
+                });
             });
-        })
     };
+    
 
     $(".Allcategories").on("click",
         function(e) {

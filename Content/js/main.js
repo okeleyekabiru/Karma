@@ -1,31 +1,70 @@
 
 $(document).ready(function(){
   "use strict";
+ 
+  var carts = JSON.parse(window.localStorage.carts || "[]");
+  $(".carts-display").html(`${carts.length}`);
+  function store(params) {
+    window.localStorage.carts = JSON.stringify(params);
+
+  }
   $(".products-grid").on("click", function (e) {
     if (e.target.classList.contains("carts")) {
-  var itemid = e.target.attributes['data.id'].value;
-
-  $.ajax({
-    url: 'https://localhost:44315/products/details',
-        data: { 'id': itemid,  'quantity': 1 },
-        type: "post",
-        cache: false,
-    success: function (m) {
-      var len = $(".carts-display").length;
-      for (var i = 0; i < len; i++) {
-        $(".carts-display")[i].innerText = parseInt($(".carts-display")[i].innerText) + 1;
+      var itemid = e.target.attributes['data.id'].value;
+      var itemname = e.target.attributes['data.name'].value;
+      var itemprice = e.target.attributes['data.price'].value;
+      var itemdesc = e.target.attributes['data.desc'].value;
+      var itemphoto = e.target.attributes['data.photo'].value;
+      var itemcat = e.target.attributes['data.cat'].value;
+      var data = {
+        Price: itemprice,
+        Id: itemid,
+        Photos: itemphoto,
+        ProductName: itemname,
+        Category: itemcat,
+        Description: itemdesc,
+        Quantity:1
       }
-      console.log($(".carts-display"));
 
-    },
-        error: function (e) {
-         console.log("failed to submit");
-        }
-      });
+//  $.ajax({
+//    url: 'https://localhost:44315/products/details',
+//        data: { 'id': itemid,  'quantity': 1 },
+//        type: "post",
+//        cache: false,
+//    success: function (m) {
+//      var len = $(".carts-display").length;
+//      for (var i = 0; i < len; ++i) {
+//        $(".carts-display")[i].innerText = parseInt($(".carts-display")[i].innerText) + 1;
+//      }
+//      console.log($(".carts-display"));
+//
+//    },
+//        error: function (e) {
+//         console.log("failed to submit");
+//        }
+//      });
+      
+      carts.push(data);
+      store(carts);
+      $(".carts-display").empty();
+      $(".carts-display").html(`${carts.length}`);
+
+
     } 
+    if (e.target.classList.contains("wishlist")) {
+      console.log("love");
+      var id = e.target.attributes['data.id'].value;
+      console.log(id);
+      var item = carts.findIndex(x => x.Id === id);
+      carts.splice(item, 1);
+      store(carts);
+      console.log(carts);
+    };
+      
+    }
    
-  });
-
+  );
+ 
 	var window_width 	 = $(window).width(),
 	window_height 		 = window.innerHeight,
 	header_height 		 = $(".default-header").height(),
