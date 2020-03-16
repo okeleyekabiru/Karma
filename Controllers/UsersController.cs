@@ -102,7 +102,7 @@ namespace Shopy.Controllers
         {
             List<Cart> model = new List<Cart>();
             model.AddRange(carts);
-            if (Session["Carts"] == null) Session["Carts"] = model;
+             Session["Carts"] = model;
             return Json("success");
         }
 
