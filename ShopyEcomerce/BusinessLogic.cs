@@ -11,7 +11,7 @@ namespace ShopyEcomerce
     public class BusinessLogic
     {
 
-
+ 
         public static List<Cart> ListingCarts { get; set; } = new List<Cart>();
 
         public static IEnumerable<Cart> LoadOrdersAndCarts(IEnumerable<Cart> carts)
@@ -148,6 +148,19 @@ namespace ShopyEcomerce
             }
 
             return total;
+        }
+
+        public static void ManageCarts(string productname)
+        {
+          ListingCarts.RemoveAll(product=> product.ProductName == productname);                                                                                                                                                              
+          
+        }
+
+        public static void UndoCarts(string productname)
+        {
+          var value =  ListingCarts.FirstOrDefault(r => r.ProductName == productname)
+                ;
+          ListingCarts.Remove(value);
         }
     }
 }

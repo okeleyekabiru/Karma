@@ -48,7 +48,7 @@
         </dt>
 
         <dd>
-            <img src="data:image/png;base64,@Convert.ToBase64String(@Model.Photos, 0, @Model.Photos.Length)" alt="@Model.Description" style="width:300px" />
+            <img src="@Model.Photos" alt="@Model.Description" style="width:300px" />
         </dd>
 
     </dl>

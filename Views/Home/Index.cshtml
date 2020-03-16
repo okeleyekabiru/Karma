@@ -57,7 +57,7 @@
             <nav class="navbar navbar-expand-lg navbar-light main_box">
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html"><img src="/Content/img/logo.png" alt=""></a>
+                    <a class="navbar-brand logo_h" href="@Url.Action("Index","Home")"><img src="/Content/img/logo.png" alt=""></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="icon-bar"></span>
@@ -67,33 +67,31 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="@Url.Action("Index","Home")">Home</a></li>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Shop</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Shop Category</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Product Details</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="@Url.Action("CheckOut","Orders")">Product Checkout</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Carts","Users")">Shopping Cart</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Confirmation</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Blog</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Pages</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Login","Account")">Login</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -332,9 +330,9 @@
                                         </div>
                                      
                                             <div class="prd-bottom ">
-                                                <span class="social-info carts" data.id ="@item.Id">
-                                                    <span class="ti-bag carts" data.id ="@item.Id"></span>
-                                                    <p class="hover-text carts" data.id ="@item.Id">add to cart</p>
+                                                <span class="social-info carts" data.id ="@item.Id" data.cat="@item.Category"data.name="@item.ProductName" data.price="@item.Price" data.photo="@item.Photos" data.desc="@item.Description">
+                                                    <span class="ti-bag carts" data.id ="@item.Id" data.cat="@item.Category"data.name="@item.ProductName" data.price="@item.Price" data.photo="@item.Photos" data.desc="@item.Description"></span>
+                                                    <p class="hover-text carts" data.id ="@item.Id" data.cat="@item.Category"data.name="@item.ProductName" data.price="@item.Price" data.photo="@item.Photos" data.desc="@item.Description">add to cart</p>
                                                 </span>
                                                 <span class="social-info wishlist  "data.id ="@item.Id">
                                                     <span class="lnr lnr-heart wishlist" data.id ="@item.Id"></span>

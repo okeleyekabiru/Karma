@@ -458,6 +458,7 @@
     <Content Include="Content\Karma Shop-doc\js\_DS_Store" />
     <Content Include="Content\Karma Shop-doc\syntax-highlighter\_DS_Store" />
     <Content Include="Content\img\.DS_Store" />
+    <None Include="Properties\PublishProfiles\Shopy20200229111109 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

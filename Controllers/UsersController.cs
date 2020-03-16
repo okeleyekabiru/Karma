@@ -96,6 +96,14 @@ namespace Shopy.Controllers
         public ActionResult Carts(string name)
         {
             return RedirectToAction("Delete", new {name = name});
+        }  
+        [HttpPost]
+        public ActionResult CartsArray(List<Cart> carts)
+        {
+            List<Cart> model = new List<Cart>();
+            model.AddRange(carts);
+            if (Session["Carts"] == null) Session["Carts"] = model;
+            return Json("success");
         }
 
         [Authorize]
@@ -118,10 +126,14 @@ namespace Shopy.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Remove(int id,FormCollection form)
+        public ActionResult Remove(int id,string productname)
         {
 
-           
+            if (!User.Identity.IsAuthenticated)
+            {
+              BusinessLogic.ManageCarts(productname);
+              return Json(BusinessLogic.ListingCarts, JsonRequestBehavior.AllowGet);
+            }
             var getCart = _cartsdb.GetCart(id);
             if (getCart== null)
             {
@@ -143,8 +155,13 @@ namespace Shopy.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(int id, FormCollection form)
+        public ActionResult Delete(int id,string productname)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                BusinessLogic.UndoCarts(productname);
+                return Json(BusinessLogic.ListingCarts, JsonRequestBehavior.AllowGet);
+            }
             var mo = _cartsdb.GetCart(id);
             if (mo == null)
             {
